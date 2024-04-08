@@ -39,8 +39,6 @@ try:
         val = adc()
         sig = decimal2binary(val)
         GPIO.output(leds, sig)
-        time.sleep(0.01)
-        GPIO.output(leds, 0)
 
 finally:
     GPIO.output(dac, 0)
