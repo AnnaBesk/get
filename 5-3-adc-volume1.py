@@ -32,14 +32,19 @@ def adc():
         if compVal == 1:
             print("Value", value, "Signal", signal, "Voltage", voltage)
             return value
-            break
+    return 255
 
 try:
     while (True):
         val = adc()
-        sig = decimal2binary(val)
-        GPIO.output(leds, sig)
-
+        if val == 0:
+            GPIO.output(leds, 0)
+        elif not type(val):
+            GPIO.output(leds, 1)
+        else:
+            count = int((val / 255) * 8)
+            GPIO.output(leds[0:count], 1)
+            GPIO.output(leds[count + 1:], 0)
 finally:
     GPIO.output(dac, 0)
     GPIO.cleanup()

@@ -33,12 +33,17 @@ def adc():
     signal = decimal2binary(val)
     voltage = val/ levels * maxVol
     print("Value", val, "Signal", signal, "Voltage", voltage)
-    return signal
+    return val
 
 try:
     while (True):
-        sig = adc()
-        GPIO.output(leds, sig)
+        val = adc()
+        if val == 0:
+            GPIO.output(leds, 0)
+        else:
+            count = int((val / 255) * 8)
+            GPIO.output(leds[0:count], 1)
+            GPIO.output(leds[count + 1:], 0)
 
 finally:
     GPIO.output(dac, 0)
